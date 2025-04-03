@@ -4,6 +4,8 @@
   publish = "dist"
 
 [[redirects]]
-  from = "/.netlify/functions/*"
-  to = "/.netlify/functions/:splat"
+  from = "/api/*"
+  to = "https://api-test.azadlogistics.com/:splat"
   status = 200
+  force = true
+  headers = { X-From = "Netlify" }

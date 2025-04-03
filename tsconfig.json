@@ -1,0 +1,16 @@
+{
+  "files": [],
+
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    },
+    "types": ["node"], // Add Node.js types for `.env` support
+    "esModuleInterop": true // Ensure compatibility with CommonJS modules
+  },
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}

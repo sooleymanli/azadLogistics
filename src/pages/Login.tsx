@@ -11,7 +11,6 @@ const Login = () => {
   const { showSnackbar } = useSnackbar();
 
   useEffect(() => {
-    document.title = 'Daxil ol'; // Set the page title
   }, []);
 
   const onFinish = async (values: { username: string; password: string }) => {
@@ -20,7 +19,7 @@ const Login = () => {
       const response = await api.post('/login', values);
       localStorage.setItem('accessToken', response.data.accessToken);
       showSnackbar('Uğurla daxil oldunuz!', { variant: 'success' });
-      navigate('/admin'); // Redirect to admin panel after login
+      navigate('/admin'); 
     } catch (error: any) {
       if (error.response?.status === 400) {
         showSnackbar('İstifadəçi adı və ya şifrə yanlışdır', { variant: 'error' });
@@ -33,7 +32,7 @@ const Login = () => {
   };
 
   const navigateToCalculator = () => {
-    navigate('/'); // Navigate to Calculator page
+    navigate('/'); 
   };
 
   return (

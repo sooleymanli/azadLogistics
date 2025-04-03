@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Spin, ConfigProvider, Result, Input, Button, Breadcrumb, theme } from 'antd';
 import { jwtDecode } from 'jwt-decode';
-import api from '@/utils/axios';
+import { getPriceSettings } from '@/services/priceSettingsService';
 import azLocale from 'antd/lib/locale/az_AZ';
 import HeaderContent from '@/components/HeaderContent';
 import DataTable from '@/components/DataTable';
@@ -40,8 +40,8 @@ const AdminPanel = () => {
         try {
             setLoading(true);
             setError(false);
-            const response = await api.get('/getPriceSettings');
-            setData(response.data.data);
+            const data = await getPriceSettings(); 
+            setData(data);
         } catch (error) {
             setError(true);
         } finally {
@@ -69,12 +69,12 @@ const AdminPanel = () => {
                     width: '100%',
                     display: 'flex',
                     alignItems: 'center',
-                    padding:0
+                    padding: 0,
                 }}
             >
                 <HeaderContent user={user} />
             </Header>
-            <Content className='px-2 md:px-5'>
+            <Content className="px-2 md:px-5">
                 <Breadcrumb style={{ margin: '16px 0' }}>
                     <Breadcrumb.Item>Admin</Breadcrumb.Item>
                     <Breadcrumb.Item>Hərraclar</Breadcrumb.Item>
@@ -88,7 +88,7 @@ const AdminPanel = () => {
                     }}
                 >
                     <div className="flex justify-between items-center mb-5">
-                            <h2 className='text-[24px]'>Hərraclar</h2>
+                        <h2 className="text-[24px]">Hərraclar</h2>
                         <Button type="primary" onClick={() => setDrawerVisible(true)}>
                             Yeni əlavə et
                         </Button>
@@ -126,7 +126,6 @@ const AdminPanel = () => {
                     />
                 </div>
             </Content>
-         
         </Layout>
     );
 };

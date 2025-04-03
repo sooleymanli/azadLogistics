@@ -1,9 +1,9 @@
-
 import { createBrowserRouter, RouterProvider, Navigate } from 'react-router';
 import { ConfigProvider } from 'antd';
 import Login from './pages/Login';
 import Calculator from './pages/Calculator';
 import AdminPanel from './pages/AdminPanel';
+import NotFound from './pages/NotFound'; // Import NotFound page
 import { JSX } from 'react';
 
 const PrivateRoute = ({ children }: { children: JSX.Element }) => {
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
   }, 
   {
     path: '/',
-    element: <Calculator />, // No login required for Calculator
+    element: <Calculator />,
   },
   {
     path: '/admin',
@@ -27,6 +27,10 @@ const router = createBrowserRouter([
         <AdminPanel />
       </PrivateRoute>
     ),
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 

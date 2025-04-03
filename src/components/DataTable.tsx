@@ -3,7 +3,7 @@ import { Table, Tooltip, Popconfirm, Button, TableColumnType } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { useSnackbar } from 'notistack';
-import api from '@/utils/axios';
+import { deletePriceSetting } from '@/services/priceSettingsService'; 
 
 interface PriceSetting {
     id: string;
@@ -26,7 +26,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, fetchPriceSettings, searchT
     const handleDelete = async (id: string) => {
         setDeletingId(id);
         try {
-            await api.get(`/deletePriceSetting/${id}`);
+            await deletePriceSetting(id); 
             enqueueSnackbar('Məlumat uğurla silindi.', { variant: 'success' });
             fetchPriceSettings();
         } catch (error) {
@@ -41,7 +41,7 @@ const DataTable: React.FC<DataTableProps> = ({ data, fetchPriceSettings, searchT
             title: 'Hərrac',
             dataIndex: 'auction',
             key: 'auction',
-            minWidth:100,
+            minWidth: 100,
             sorter: (a: PriceSetting, b: PriceSetting) => (a.auction || '').localeCompare(b.auction || ''),
             render: (text: string) => (
                 <Highlighter

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import {  Spin, message, Button } from 'antd';
+import { Spin, message, Button } from 'antd';
 import { useNavigate } from 'react-router';
 import api from '@/utils/axios';
 import AuctionForm from '@/components/AuctionForm';
 import PriceDisplay from '@/components/PriceDisplay';
-import Logo  from "@/assets/images/logo.png"
+import Logo from "@/assets/images/logo.png"
 
 interface PriceSetting {
     id: string;
@@ -25,11 +25,9 @@ const Calculator: React.FC = () => {
     const [selectedPort, setSelectedPort] = useState<string | undefined>(undefined);
     const [price, setPrice] = useState<string | null>(null);
 
-
     useEffect(() => {
-      document.title = 'AzadLogistics'; // Set the page title
+        document.title = 'AzadLogistics'; // Set the page title
     }, []);
-  
 
     useEffect(() => {
         fetchPriceSettings();
@@ -39,7 +37,12 @@ const Calculator: React.FC = () => {
         try {
             setLoading(true);
             const response = await api.get('/getPriceSettings');
-            setData(response.data.data);
+            if (Array.isArray(response.data.data)) { // Ensure data is an array
+                setData(response.data.data);
+            } else {
+                setData([]); // Fallback to an empty array if data is not an array
+                message.error('Gözlənilməz cavab formatı alındı.');
+            }
         } catch (error) {
             message.error('Məlumatları yükləmək mümkün olmadı.');
         } finally {
@@ -102,13 +105,11 @@ const Calculator: React.FC = () => {
             ) : (
                 <>
                     <div className="w-full max-w-md space-y-4 p-4 bg-white rounded-lg shadow-md ">
-                      <div className='flex flex-col items-center pt-3'>
-
-                           <img src={Logo} alt='logo' width={200} />
-                      </div>
-                         
+                        <div className='flex flex-col items-center pt-3'>
+                            <img src={Logo} alt='logo' width={200} />
+                        </div>
                         <AuctionForm
-                            data={data}
+                            data={data || []} // Ensure data is always an array
                             selectedAuction={selectedAuction}
                             filteredNames={filteredNames}
                             selectedName={selectedName}

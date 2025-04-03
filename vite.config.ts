@@ -14,7 +14,7 @@ export default defineConfig({
       '/api': {
         target: 'https://api-test.azadlogistics.com',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''), // Remove `/api` prefix
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
     },
   },
